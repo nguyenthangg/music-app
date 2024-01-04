@@ -26,12 +26,12 @@ jobs:
           aws-region: us-west-2  # Change to your desired region
 
       - name: Terraform Init
-        run: terraform init ./terraform
+        run: terraform init -chdir=./terraform
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan ./terraform
+        run: terraform plan -out=tfplan -chdir=./terraform
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan ./terraform
+        run: terraform apply -auto-approve tfplan -chdir=./terraform
 
       # Optionally, add steps to capture the output, test the instance, etc.
