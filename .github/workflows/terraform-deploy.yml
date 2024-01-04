@@ -25,13 +25,16 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}
           aws-region: us-west-2  # Change to your desired region
 
+
       - name: Terraform Init
-        run: terraform init -chdir=./terraform
+        run: |
+            cd terraform
+            terraform init 
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan -chdir=./terraform
+        run: terraform plan -out=tfplan
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan -chdir=./terraform
+        run: terraform apply -auto-approve tfplan 
 
       # Optionally, add steps to capture the output, test the instance, etc.
