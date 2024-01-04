@@ -6,3 +6,7 @@ resource "aws_instance" "example" {
     Name = "example-instance"
   }
 }
+
+output "ec2_instance_id" {
+  value = aws_instance.example.id
+}
