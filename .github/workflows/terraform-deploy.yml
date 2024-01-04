@@ -28,13 +28,15 @@ jobs:
 
       - name: Terraform Init
         run: |
-            cd terraform
-            terraform init 
+          cd terraform
+          terraform init
 
       - name: Terraform Plan
-        run: terraform plan -out=tfplan
+        run: |
+          cd terraform
+          terraform plan -out=tfplan
 
       - name: Terraform Apply
-        run: terraform apply -auto-approve tfplan 
-
-      # Optionally, add steps to capture the output, test the instance, etc.
+        run: |
+          cd terraform
+          terraform apply -auto-approve tfplan
