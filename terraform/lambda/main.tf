@@ -38,7 +38,7 @@ resource "aws_lambda_function" "lambda-file-upload-v2" {
 resource "aws_lambda_permission" "apigw_lambda" {
   statement_id  = "AllowExecutionFromAPIGateway"
   action        = "lambda:InvokeFunction"
-  function_name = aws_lambda_function.lambda-file-upload-event.function_name
+  function_name = aws_lambda_function.lambda-file-upload-v2.function_name
   principal     = "apigateway.amazonaws.com"
 
   # More: http://docs.aws.amazon.com/apigateway/latest/developerguide/api-gateway-control-access-using-iam-policies-to-invoke-api.html
