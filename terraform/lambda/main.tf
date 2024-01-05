@@ -26,7 +26,7 @@ resource "aws_lambda_function" "lambda-file-upload-v2" {
   handler           = "lambda_function.lambda_handler"
   architectures     = ["x86_64"]
   runtime           = "python3.11"
-  filename          = "lambda_function.zip"
+  filename          = "../lambda_function.zip"
 #   source_code_hash = data.archive_file.lambda.output_base64sha256
   environment {
     variables = {
