@@ -1,4 +1,4 @@
-resource "aws_iam_role" "lambda-file-role"{
+resource "aws_iam_role" "lambda-role-file-resize"{
   name = "lambda-file-role"
 
   # Terraform's "jsonencode" function converts a
@@ -22,7 +22,7 @@ resource "aws_lambda_function" "lambda-file-upload-v2" {
   # If the file is not in the current working directory you will need to include a
   # path.module in the filename.
   function_name     = "lambda-file-upload-v2"
-  role              = aws_iam_role.lambda-file-role.arn
+  role              = aws_iam_role.lambda-role-file-resize.arn
   handler           = "lambda_function.lambda_handler"
   architectures     = ["x86_64"]
   runtime           = "python3.11"
