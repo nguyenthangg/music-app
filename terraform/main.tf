@@ -7,3 +7,7 @@ provider "aws" {
 module "ec2_module" {
   source = "./ec2"
 }
+
+module "lambda_module" {
+  source = "./lambda"
+}
