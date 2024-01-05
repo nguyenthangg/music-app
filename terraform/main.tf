@@ -159,12 +159,6 @@ terraform {
     dynamodb_table = "terraform-series-s3-backend"
   }
 }
-
-provider "aws" {
-  region = "us-west-2"
-}
-
-
 output "public_ip" {
   value = aws_instance.server.public_ip
 }
