@@ -1,5 +1,5 @@
 resource "aws_iam_role" "lambda-role-file-resize"{
-  name = "lambda-file-role"
+  name = "lambda-role-file-resize"
 
   # Terraform's "jsonencode" function converts a
   # Terraform expression result to valid JSON syntax.
