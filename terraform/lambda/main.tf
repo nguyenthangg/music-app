@@ -19,6 +19,8 @@ resource "aws_iam_role" "lambda-role-file-resize-v2"{
   })
   managed_policy_arns = var.lambda_policy
 }
+
+
 resource "aws_lambda_function" "lambda-file-upload-v2" {
   # If the file is not in the current working directory you will need to include a
   # path.module in the filename.

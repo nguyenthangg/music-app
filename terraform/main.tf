@@ -12,3 +12,6 @@ module "api_gateway_module"{
   source = "./apigateway"
 }
 
+module "s3"{
+  source = "./s3"
+}
