@@ -8,9 +8,7 @@ module "ec2_module" {
   source = "./ec2"
 }
 
-module "lambda_module" {
-  source = "./lambda"
+module "api_gateway_module"{
+  source = "./apigateway"
 }
-
-
 

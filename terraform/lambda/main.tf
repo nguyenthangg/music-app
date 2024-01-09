@@ -1,3 +1,4 @@
+
 resource "aws_iam_role" "lambda-role-file-resize-v2"{
   name = "lambda-role-file-resize-v2"
 
@@ -35,7 +36,7 @@ resource "aws_lambda_function" "lambda-file-upload-v2" {
   }
 }
 
-# resource "aws_lambda_permission" "apigw_lambda" {
+# resource "aws_lambda_permission" "apigw_lambda_file_upload_v2" {
 #   statement_id  = "AllowExecutionFromAPIGateway"
 #   action        = "lambda:InvokeFunction"
 #   function_name = aws_lambda_function.lambda-file-upload-v2.function_name
