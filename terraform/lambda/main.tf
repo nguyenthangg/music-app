@@ -19,15 +19,22 @@ resource "aws_iam_role" "iam_for_lambda"{
   })
   managed_policy_arns = var.lambda_policy
 }
+
 data "archive_file" "lambda_zip" {
   type        = "zip"
   output_path = "${path.module}/lambda/lambda_function.zip"  # Output path for the ZIP file
 
   source {
-    content  = file("../lambda_function.py")  # Path to the file you want to include in the ZIP
+    content  = file("${path.module}/../../lambda_function.py")  # Relative path to lambda_function.py from the current working directory
     filename = "lambda_function.py"  # Name of the file within the ZIP
   }
+
+  source {
+    content  = file("${path.module}/../../module_post.py")  # Relative path to module_post.py from the current working directory
+    filename = "module_post.py"
+  }
 }
+
 
 
 resource "aws_lambda_function" "lambda-file-upload-v2" {
@@ -38,7 +45,7 @@ resource "aws_lambda_function" "lambda-file-upload-v2" {
   handler           = "lambda_function.lambda_handler"
   architectures     = ["x86_64"]
   runtime           = "python3.11"
-  filename      = data.archive_file.lambda_zip.output_path  # Use the output_path of the ZIP file
+  filename          = data.archive_file.lambda_zip.output_path  # Use the output_path of the ZIP file
 
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
   environment {
@@ -47,3 +54,25 @@ resource "aws_lambda_function" "lambda-file-upload-v2" {
     }
   }
 }
+
+
+# IAM Policy for DynamoDB access
+resource "aws_iam_policy" "lambda_policy" {
+  name        = "lambda_dynamodb_policy"
+  description = "Policy for Lambda to access DynamoDB"
+
+  policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [{
+      Action   = ["dynamodb:PutItem", "dynamodb:GetItem", "dynamodb:Query", "dynamodb:Scan"],
+      Effect   = "Allow",
+      Resource = var.dynamodb_arn
+    }]
+  })
+}
+# Attach the policy to the role
+resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
+  policy_arn = aws_iam_policy.lambda_policy.arn
+  role       = aws_iam_role.iam_for_lambda.name
+}
+
