@@ -41,17 +41,17 @@ data "archive_file" "lambda_zip" {
 
   source {
     content  = file("${path.module}/../../bin")
-    filename = "bin"  # Include the entire "bin" directory
+    filename = "bin/"  # Include the entire "bin" directory
   }
 
   source {
     content  = file("${path.module}/../../pytube")
-    filename = "pytube"  # Include the entire "pytube" directory
+    filename = "pytube/"  # Include the entire "pytube" directory
   }
 
   source {
     content  = file("${path.module}/../../pytube-15.0.0.dist-info")
-    filename = "pytube-15.0.0.dist-info"  # Include the entire "pytube-15.0.0.dist-info" directory
+    filename = "pytube-15.0.0.dist-info/"  # Include the entire "pytube-15.0.0.dist-info" directory
   }
 }
 
