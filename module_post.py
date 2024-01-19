@@ -1,5 +1,6 @@
 import boto3
 import json
+from pytube import YouTube
 region = 'us-west-2'
 dynamodb = boto3.resource('dynamodb', region_name=region)
 
@@ -8,10 +9,11 @@ table_name = 'youtube-link'
 table = dynamodb.Table(table_name)
 
 def module_post(body):
+    link = body.get('youtubeLink')
+    name = scrape_info(link)
 
     try:
         id = str(body.get('id'))
-        name = body.get('name')
         youtube_link = body.get('youtubeLink')
 
         # logic with id, name, and youtube_link goes here
@@ -25,9 +27,6 @@ def module_post(body):
 
         print("Item added to DynamoDB successfully:", response)
 
-        
-        
-
     #     # Returning a response (this is just an example)
         return {
                 "statusCode": 200,
@@ -40,3 +39,12 @@ def module_post(body):
             'statusCode': 500,
             'body': 'Error adding item to DynamoDB',
         }
+
+def scrape_info(url): 
+    try:
+        yt = YouTube(url)
+        title = yt.title
+        return title
+    except Exception as e:
+        print(f"Error: {e}")
+        return None

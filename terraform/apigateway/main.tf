@@ -93,13 +93,30 @@ resource "aws_api_gateway_integration" "yourlist_get_integration" {
   type                    = "AWS_PROXY"
   uri                     = var.invoke_arn
 }
+################delete
+resource "aws_api_gateway_method" "yourlist_delete_link_method" {
+  rest_api_id   = aws_api_gateway_rest_api.example_api_gateway.id
+  resource_id   = aws_api_gateway_resource.yourlist_resource.id
+  http_method   = "DELETE"
+  authorization = "NONE"
+}
+
+resource "aws_api_gateway_integration" "yourlist_delete_link_integration" {
+  rest_api_id             = aws_api_gateway_rest_api.example_api_gateway.id
+  resource_id             = aws_api_gateway_resource.yourlist_resource.id
+  http_method             = aws_api_gateway_method.yourlist_delete_link_method.http_method
+  integration_http_method = "POST"
+  type                    = "AWS_PROXY"
+  uri                     = var.invoke_arn
+}
 
 ##########################################################################################
 resource "aws_api_gateway_deployment" "example_deployment" {
   depends_on    = [aws_api_gateway_integration.health_integration,
                   aws_api_gateway_integration.example_integration,
                   aws_api_gateway_integration.yourlist_get_integration,
-                  aws_api_gateway_integration.yourlist_post_integration]
+                  aws_api_gateway_integration.yourlist_post_integration,
+                  aws_api_gateway_integration.yourlist_delete_link_integration]
 
   rest_api_id   = aws_api_gateway_rest_api.example_api_gateway.id
   # Replace with your desired stage name

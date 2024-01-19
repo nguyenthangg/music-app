@@ -33,6 +33,10 @@ data "archive_file" "lambda_zip" {
     content  = file("${path.module}/../../module_post.py")  # Relative path to module_post.py from the current working directory
     filename = "module_post.py"
   }
+  source {
+    content  = file("${path.module}/../../package")  # Relative path to module_post.py from the current working directory
+    filename = "module_post.py"
+  }
 }
 
 
@@ -54,25 +58,3 @@ resource "aws_lambda_function" "lambda-file-upload-v2" {
     }
   }
 }
-
-
-# IAM Policy for DynamoDB access
-resource "aws_iam_policy" "lambda_policy" {
-  name        = "lambda_dynamodb_policy"
-  description = "Policy for Lambda to access DynamoDB"
-
-  policy = jsonencode({
-    Version = "2012-10-17",
-    Statement = [{
-      Action   = ["dynamodb:PutItem", "dynamodb:GetItem", "dynamodb:Query", "dynamodb:Scan"],
-      Effect   = "Allow",
-      Resource = var.dynamodb_arn
-    }]
-  })
-}
-# Attach the policy to the role
-resource "aws_iam_role_policy_attachment" "lambda_policy_attachment" {
-  policy_arn = aws_iam_policy.lambda_policy.arn
-  role       = aws_iam_role.iam_for_lambda.name
-}
-

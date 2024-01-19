@@ -4,14 +4,15 @@ provider "aws" {
 }
 module "dynamodb"{
   source = "./dynamodb"
+  lambda_role_name = module.lambda.lambda_role_name
 }
 // Module references
 module "ec2_module" {
   source = "./ec2"
 }
+
 module "lambda" {
   source = "./lambda"  # Path to your Lambda module
-  dynamodb_arn = module.dynamodb.dynamodb_arn
 }
 
 module "api_gateway"{
