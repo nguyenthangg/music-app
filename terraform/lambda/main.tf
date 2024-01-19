@@ -40,20 +40,21 @@ data "archive_file" "lambda_zip" {
   }
 
   source {
-    content  = fileset("${path.module}/../../bin", "**/*")
+    content  = [for f in fileset("${path.module}/../../bin", "**/*") : "${path.module}/../../bin/${f}"]
     filename = "bin/"
   }
 
   source {
-    content  = fileset("${path.module}/../../pytube", "**/*")
+    content  = [for f in fileset("${path.module}/../../pytube", "**/*") : "${path.module}/../../pytube/${f}"]
     filename = "pytube/"
   }
 
   source {
-    content  = fileset("${path.module}/../../pytube-15.0.0.dist-info", "**/*")
+    content  = [for f in fileset("${path.module}/../../pytube-15.0.0.dist-info", "**/*") : "${path.module}/../../pytube-15.0.0.dist-info/${f}"]
     filename = "pytube-15.0.0.dist-info/"
   }
 }
+
 
 
 resource "aws_lambda_function" "lambda-file-upload-v2" {
