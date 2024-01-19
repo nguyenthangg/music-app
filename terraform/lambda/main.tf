@@ -25,19 +25,36 @@ data "archive_file" "lambda_zip" {
   output_path = "${path.module}/lambda/lambda_function.zip"  # Output path for the ZIP file
 
   source {
-    content  = file("${path.module}/../../lambda_function.py")  # Relative path to lambda_function.py from the current working directory
-    filename = "lambda_function.py"  # Name of the file within the ZIP
+    content  = file("${path.module}/../../lambda_function.py")
+    filename = "lambda_function.py"
   }
 
   source {
-    content  = file("${path.module}/../../module_post.py")  # Relative path to module_post.py from the current working directory
+    content  = file("${path.module}/../../module_post.py")
     filename = "module_post.py"
   }
+
   source {
-    content  = file("${path.module}/../../package")  # Relative path to module_post.py from the current working directory
-    filename = "module_post.py"
+    content  = file("${path.module}/../../module_delete_link.py")
+    filename = "module_delete_link.py"
+  }
+
+  source {
+    content  = file("${path.module}/../../bin")
+    filename = "bin/*"  # Include all files under the "bin" directory
+  }
+
+  source {
+    content  = file("${path.module}/../../pytube")
+    filename = "pytube/*"  # Include all files under the "pytube" directory
+  }
+
+  source {
+    content  = file("${path.module}/../../pytube-15.0.0.dist-info")
+    filename = "pytube-15.0.0.dist-info/*"  # Include all files under the "pytube-15.0.0.dist-info" directory
   }
 }
+
 
 
 
