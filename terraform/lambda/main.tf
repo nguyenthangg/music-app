@@ -22,7 +22,7 @@ resource "aws_iam_role" "iam_for_lambda"{
 
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  output_path = "${path.module}/lambda/lambda_function.zip"  # Output path for the ZIP file
+  output_path = "${path.module}/lambda/lambda_function.zip"
 
   source {
     content  = file("${path.module}/../../lambda_function.py")
@@ -41,20 +41,19 @@ data "archive_file" "lambda_zip" {
 
   source {
     content  = file("${path.module}/../../bin")
-    filename = "bin/*"  # Include all files under the "bin" directory
+    filename = "bin"  # Include the entire "bin" directory
   }
 
   source {
     content  = file("${path.module}/../../pytube")
-    filename = "pytube/*"  # Include all files under the "pytube" directory
+    filename = "pytube"  # Include the entire "pytube" directory
   }
 
   source {
     content  = file("${path.module}/../../pytube-15.0.0.dist-info")
-    filename = "pytube-15.0.0.dist-info/*"  # Include all files under the "pytube-15.0.0.dist-info" directory
+    filename = "pytube-15.0.0.dist-info"  # Include the entire "pytube-15.0.0.dist-info" directory
   }
 }
-
 
 
 
