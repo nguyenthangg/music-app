@@ -33,7 +33,7 @@ resource "aws_instance" "example" {
  connection {
     type        = "ssh"
     user        = "ec2-user"  # Update with your EC2 instance username
-    private_key = file("~/.ssh/id_rsa")
+    private_key = var.private_key
     host        = self.public_ip
   }
 }
