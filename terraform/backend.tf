@@ -4,5 +4,6 @@ terraform {
     key            = "staging/statefile.tfstate"
     region         = "us-west-2"
     encrypt        = true
+    
   }
 }
