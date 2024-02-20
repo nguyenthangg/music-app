@@ -3,7 +3,7 @@
 
 resource "aws_key_pair" "deployer" {
   key_name   = "deployer-key"
-  public_key = file("${path.module}/../../deployer-key2.pem")
+  public_key = file("${path.module}/../../ssh_key_aws.pub")
 }
 
 # ssh-keygen # name = ssh_key_aws
@@ -29,7 +29,7 @@ resource "aws_instance" "example" {
     echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
     EOF
 
-  connection {
+ connection {
     type        = "ssh"
     user        = "ec2-user"
     private_key = aws_key_pair.deployer.private_key_pem
