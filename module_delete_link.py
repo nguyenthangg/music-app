@@ -9,6 +9,7 @@ table_name = 'youtube-link'
 table = dynamodb.Table(table_name)
 
 def module_delete_link(body):
+    
     return {
             'statusCode': 200,
             'body': json.dumps('resource is ready')

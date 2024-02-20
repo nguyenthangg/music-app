@@ -2,6 +2,7 @@
 provider "aws" {
   region = var.aws_region
 }
+
 module "dynamodb"{
   source = "./dynamodb"
   lambda_role_name = module.lambda.lambda_role_name

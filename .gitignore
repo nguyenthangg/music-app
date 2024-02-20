@@ -1,2 +1,4 @@
 /terraform/.terraform/
 /main/
+ssh_key_aws
+ssh_key_aws.pub

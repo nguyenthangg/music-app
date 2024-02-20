@@ -2,6 +2,7 @@ import json
 import boto3
 from module_post import module_post
 from module_delete_link import module_delete_link
+from authenticate import authenticate
 region = 'us-west-2'
 dynamodb = boto3.resource('dynamodb', region_name=region)
 
@@ -28,7 +29,9 @@ def lambda_handler(event, context):
             'statusCode': 200,
             'body': json.dumps('resource is ready')
         }
-    
+    # elif httpMethod == 'GET' and path == '/authenticate':
+    #     return(authenticate(event))
+
     elif httpMethod == 'DELETE' and path == '/link':
         body = json.loads(event['body'])
         return(module_delete_link(body))
@@ -36,7 +39,6 @@ def lambda_handler(event, context):
     elif httpMethod == 'POST' and path == '/yourlist':
         body = json.loads(event['body'])
         return(module_post(body))
-
 
     elif httpMethod == 'GET' and path == '/yourlist':
         response = table.scan()

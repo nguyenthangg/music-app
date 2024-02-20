@@ -22,37 +22,8 @@ resource "aws_iam_role" "iam_for_lambda"{
 
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  output_path = "${path.module}/lambda/lambda_function.zip"
-
-  source {
-    content  = file("${path.module}/../../lambda_function.py")
-    filename = "lambda_function.py"
-  }
-
-  source {
-    content  = file("${path.module}/../../module_post.py")
-    filename = "module_post.py"
-  }
-
-  source {
-    content  = file("${path.module}/../../module_delete_link.py")
-    filename = "module_delete_link.py"
-  }
-
-  source {
-    content  = [for f in fileset("${path.module}/../../bin", "**/*") : "${path.module}/../../bin/${f}"]
-    filename = "bin/"
-  }
-
-  source {
-    content  = [for f in fileset("${path.module}/../../pytube", "**/*") : "${path.module}/../../pytube/${f}"]
-    filename = "pytube/"
-  }
-
-  source {
-    content  = [for f in fileset("${path.module}/../../pytube-15.0.0.dist-info", "**/*") : "${path.module}/../../pytube-15.0.0.dist-info/${f}"]
-    filename = "pytube-15.0.0.dist-info/"
-  }
+  source_dir  = "./lambda"
+  output_path = "./lambda/lambda_function.zip"
 }
 
 
@@ -66,7 +37,6 @@ resource "aws_lambda_function" "lambda-file-upload-v2" {
   architectures     = ["x86_64"]
   runtime           = "python3.11"
   filename          = data.archive_file.lambda_zip.output_path  # Use the output_path of the ZIP file
-
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
   environment {
     variables = {

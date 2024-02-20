@@ -16,11 +16,18 @@ def create_modified_url(video_id):
     base_url = f'https://www.youtube.com/embed/{video_id}'
     return base_url
 
+
+
+
+
+
+
+
 # Streamlit app
 st.title("YouTube URL Processor")
 
 # Input for JSON data
-json_input = st.text_area("Enter JSON data (in the format provided):", '{"id": 1, "youtubeLink": "https://www.youtube.com/watch?v=Ve_1XZkG65U"}')
+json_input = st.text_area("Enter link data (in the format provided):", '{"id": 1, "youtubeLink": "https://www.youtube.com/watch?v=Ve_1XZkG65U"}')
 
 # Process input when JSON data is provided
 if st.button("Process JSON"):
