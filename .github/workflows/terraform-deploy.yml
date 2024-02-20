@@ -49,11 +49,11 @@ jobs:
       #       zip -r terraform/lambda/lambda/lambda_zip.zip lambda_function.py module_post.py module_delete_link.py bin pytube pytube-15.0.0.dist-info
       #   working-directory: terraform    
 
-      - name: Set up SSH key
-        run: |
-          echo "${{ secrets.EC2_PRIVATE_SSH_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -t rsa your-ec2-instance-ip >> ~/.ssh/known_hosts
+      # - name: Set up SSH key
+      #   run: |
+      #     echo "${{ secrets.EC2_PRIVATE_SSH_KEY }}" > ~/.ssh/id_rsa
+      #     chmod 600 ~/.ssh/id_rsa
+      #     ssh-keyscan -t rsa your-ec2-instance-ip >> ~/.ssh/known_hosts
 
 
       - name: Terraform Init
