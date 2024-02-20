@@ -43,11 +43,11 @@ jobs:
           # aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}
       #     aws-region: us-west-2  # Change to your desired region
       
-      - name: Zip Lambda files
-        run: |
-            mkdir -p terraform/lambda/lambda
-            zip -r terraform/lambda/lambda/lambda_zip.zip lambda_function.py module_post.py module_delete_link.py bin pytube pytube-15.0.0.dist-info
-        working-directory: terraform    
+      # - name: Zip Lambda files
+      #   run: |
+      #       mkdir -p terraform/lambda/lambda
+      #       zip -r terraform/lambda/lambda/lambda_zip.zip lambda_function.py module_post.py module_delete_link.py bin pytube pytube-15.0.0.dist-info
+      #   working-directory: terraform    
 
       - name: Set up SSH key
         run: |
