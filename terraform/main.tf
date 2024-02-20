@@ -10,6 +10,9 @@ module "dynamodb"{
 // Module references
 module "ec2_module" {
   source = "./ec2"
+  key_name = var.key_name
+  public_key = var.public_key
+  private_key = var.private_key
 }
 
 module "lambda" {
