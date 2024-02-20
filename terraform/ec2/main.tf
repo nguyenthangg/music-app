@@ -2,9 +2,9 @@
 
 
 resource "aws_key_pair" "deployer" {
-  key_name   = "deployer-key"
-  public_key = file("${path.module}/../../ssh_key_aws.pub")
-}
+  key_name   = var.key_name
+  public_key = var.public_key
+  }
 
 # ssh-keygen # name = ssh_key_aws
 # chmod 400 ssh_key_aws
@@ -18,18 +18,20 @@ resource "aws_instance" "example" {
   tags = {
     Name = "example-instance"
   }
-  user_data = <<-EOF
-    #!/bin/bash
-    # Use this for your user data (script from top to bottom)
-    # install httpd (Linux 2 version)
-    yum update -y
-    yum install -y httpd
-    systemctl start httpd
-    systemctl enable httpd
-    echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
-    EOF
+
+ connection {
+    type        = "ssh"
+    user        = "ec2-user"  # Update with your EC2 instance username
+    private_key = file("~/.ssh/id_rsa")
+    host        = self.public_ip
+  }
 }
 
 output "ec2_instance_id" {
   value = aws_instance.example.id
+}
+output "instance_public_ip" {
+  value = aws_instance.example.public_ip
+  sensitive = true
+  
 }
