@@ -26,7 +26,6 @@ jobs:
           aws-region: us-west-2  # Change to your desired region
       
       # - name: Configure AWS credentials for dev branch
-      #   if: github.ref == 'refs/heads/develop'
       #   uses: aws-actions/configure-aws-credentials@v1
       #   with:
       #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
