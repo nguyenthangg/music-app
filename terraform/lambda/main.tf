@@ -20,11 +20,11 @@ resource "aws_iam_role" "iam_for_lambda"{
   managed_policy_arns = var.lambda_policy
 }
 
-data "archive_file" "lambda_zip" {
-  type        = "zip"
-  source_dir  = "${path.module}/../../lambda_function.zip"
-  output_path = "${path.module}/../../lambda_function.zip"
-}
+# data "archive_file" "lambda_zip" {
+#   type        = "zip"
+#   source_dir  = "${path.module}/../../lambda_function.zip"
+#   output_path = "${path.module}/../../lambda_function.zip"
+# }
 
 
 
