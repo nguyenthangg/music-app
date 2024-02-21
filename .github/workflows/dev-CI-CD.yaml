@@ -26,7 +26,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:  
           context: .
-          file: main/Dockerfile
+          file: main/Dockerfile  # Update this line
           push: true
           tags: thang14112005/music-app:latest
 
