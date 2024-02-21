@@ -74,8 +74,8 @@ jobs:
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v5
         with:
-          context: .
-          file: ./main
+          context: ./main
+          file: ./main/Dockerfile
           push: true
           tags: thang14112005/music-app
   
