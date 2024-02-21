@@ -1,13 +1,11 @@
-name: Deploy EC2 via Terraform
+name: CD production
 
 on:
   push:
     branches:
       - main
-      - develop
-      - staging
 jobs:
-  deploy:
+  deploy-infrastructure:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,7 +26,6 @@ jobs:
           aws-region: us-west-2  # Change to your desired region
       
       # - name: Configure AWS credentials for dev branch
-      #   if: github.ref == 'refs/heads/develop'
       #   uses: aws-actions/configure-aws-credentials@v1
       #   with:
       #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
@@ -63,3 +60,6 @@ jobs:
         run: |
           cd terraform
           terraform apply -auto-approve tfplan
+
+      # - name: Build docker image -> docker hub
+      #   run: |

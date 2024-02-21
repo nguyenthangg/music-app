@@ -19,15 +19,13 @@ resource "aws_instance" "example" {
     Name = "example-instance"
   }
   user_data = <<-EOF
-    #!/bin/bash
-    # Use this for your user data (script from top to bottom)
-    # install httpd (Linux 2 version)
-    yum update -y
-    yum install -y httpd
-    systemctl start httpd
-    systemctl enable httpd
-    echo "<h1>Hello World from $(hostname -f)</h1>" > /var/www/html/index.html
-    EOF
+              #!/bin/bash
+              yum install -y docker
+              systemctl enable docker
+              systemctl start docker
+              sudo chown $USER /var/run/docker.sock
+              docker run -p 80:80 -d nginx
+              EOF
 
  connection {
     type        = "ssh"
