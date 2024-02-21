@@ -27,7 +27,7 @@ jobs:
         with:  
           file: main/Dockerfile
           push: true
-          tags: ${{ secrets.DOCKER_USERNAME }}:latest
+          tags: thang14112005/music-app:latest
 
 
   build:
