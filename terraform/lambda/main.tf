@@ -20,11 +20,11 @@ resource "aws_iam_role" "iam_for_lambda"{
   managed_policy_arns = var.lambda_policy
 }
 
-# data "archive_file" "lambda_zip" {
-#   type        = "zip"
-#   source_dir  = "./lambda"
-#   output_path = "./lambda/lambda_function.zip"
-# }
+data "archive_file" "lambda_zip" {
+  type        = "zip"
+  source_dir  = "${path.module}"
+  output_path = "${path.module}/../../lambda_function.zip"
+}
 
 
 
@@ -36,7 +36,6 @@ resource "aws_lambda_function" "lambda-file-upload-v2" {
   handler           = "lambda_function.lambda_handler"
   architectures     = ["x86_64"]
   runtime           = "python3.11"
-  filename          = "${path.module}/../../lambda_function.zip" # Use the output_path of the ZIP file
   source_code_hash = data.archive_file.lambda_zip.output_base64sha256
   environment {
     variables = {
