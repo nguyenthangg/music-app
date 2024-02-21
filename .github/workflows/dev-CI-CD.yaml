@@ -30,7 +30,6 @@ jobs:
           push: true
           tags: thang14112005/music-app:latest
 
-
   build:
     runs-on: ubuntu-latest
 
