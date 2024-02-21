@@ -22,7 +22,7 @@ resource "aws_iam_role" "iam_for_lambda"{
 
 data "archive_file" "lambda_zip" {
   type        = "zip"
-  source_dir  = "${path.module}"
+  source_dir  = "${path.module}/../../lambda_function.zip"
   output_path = "${path.module}/../../lambda_function.zip"
 }
 
@@ -36,8 +36,7 @@ resource "aws_lambda_function" "lambda-file-upload-v2" {
   handler           = "lambda_function.lambda_handler"
   architectures     = ["x86_64"]
   runtime           = "python3.11"
-  filename          = data.archive_file.lambda_zip.output_path
-  source_code_hash = data.archive_file.lambda_zip.output_base64sha256
+  filename          = "${path.module}/../../lambda_function.zip"
   environment {
     variables = {
       foo = "bar"
