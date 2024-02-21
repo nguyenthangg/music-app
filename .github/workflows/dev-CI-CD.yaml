@@ -5,6 +5,7 @@ on:
     branches:
       - dev
 jobs:
+  
   push-image-to-docker-hub:  # job name
     runs-on: ubuntu-latest  # runner name : (ubuntu latest version) 
     
@@ -25,7 +26,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v5
         with:  
-          context: .
           file: ./main/Dockerfile
           push: true
           tags: thang14112005/music-app:latest
