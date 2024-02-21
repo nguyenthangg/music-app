@@ -1,4 +1,4 @@
-name: Deploy to DEV
+name: Deploy Image docker hub
 
 on:
   push:
@@ -28,3 +28,16 @@ jobs:
         run: |
           cd terraform
           terraform init
+      # - name: Terraform Plan
+      #   run: |
+      #     cd terraform
+      #     terraform plan -out=tfplan
+  
+      # - name: Terraform Apply
+      #   run: |
+      #     cd terraform
+      #     terraform apply -auto-approve tfplan
+
+
+
+  
