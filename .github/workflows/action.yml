@@ -94,6 +94,6 @@ jobs:
             uses: docker/build-push-action@v5
             with:
               context: "{{defaultContext}}:main" # Update this path if needed
-              file: ./main/Dockerfile  # Update this path if needed
+               # Update this path if needed
               push: true
               tags: thang14112005/music-app:latest  # Update Docker Hub repository and tags
