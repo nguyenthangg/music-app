@@ -19,7 +19,7 @@ jobs:
         with:
           args: >
                 -Dsonar.organization=nguyenthangg
-                -Dsonar.projectKey=SonarCloudCodeAnalyisis
+                -Dsonar.projectKey=music-app
                 -Dsonar.python.coverage.reportPaths=coverage.xml
 
 
