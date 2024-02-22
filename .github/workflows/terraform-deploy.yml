@@ -3,7 +3,7 @@ name: CD production
 on:
   push:
     branches:
-      - dev
+      - main
 jobs:
   source-scan:
     runs-on: ubuntu-latest
