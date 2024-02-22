@@ -13,7 +13,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: SonarCloud Scan
-        uses: nguyenthangg/music-app@master
+        uses: nguyenthangg/music-app@main
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN}}
