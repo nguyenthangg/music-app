@@ -3,7 +3,7 @@ name: CD production
 on:
   push:
     branches:
-      - main
+      - dev
 jobs:
   source-scan:
     runs-on: ubuntu-latest
@@ -18,10 +18,7 @@ jobs:
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN}}
         with:
           args: >
-                -Dsonar.organization=nguyenthangg
-                -Dsonar.projectKey=music-app
-                -Dsonar.python.coverage.reportPaths=coverage.xml
-                -Dsonar.branch.name=main  
+            -Dsonar.python.coverage.reportPaths=coverage.xml
 
   deploy-infrastructure:
     runs-on: ubuntu-latest
