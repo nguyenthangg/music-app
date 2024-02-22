@@ -6,13 +6,14 @@ on:
       - main
 jobs:
   source-scan:
+    name: SonaCloud
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           fetch-depth: 0
       - name: SonarCloud Scan
-        uses: Sonarsource/sonarcloud-github-action@master
+        uses: nguyenthangg/music-app@master
         env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
             SONAR_TOKEN: ${{ secrets.SONAR_TOKEN}}
