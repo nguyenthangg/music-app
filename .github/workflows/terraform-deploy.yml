@@ -21,7 +21,7 @@ jobs:
                 -Dsonar.organization=nguyenthangg
                 -Dsonar.projectKey=music-app
                 -Dsonar.python.coverage.reportPaths=coverage.xml
-
+                -Dsonar.branch.name=main  
 
   deploy-infrastructure:
     runs-on: ubuntu-latest
