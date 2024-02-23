@@ -99,14 +99,14 @@ jobs:
             with:
               username: ${{ secrets.DOCKER_USERNAME }}
               password: ${{ secrets.DOCKER_PASSWORD }}
-          - name: Build and Push Docker Image
-            uses: docker/build-push-action@v5
-            # with:
-            #   context: . main
-            #   file: . /main/Dockerfile # Update this path if needed
-            #    # Update this path if needed
-            #   push: true
-            #   tags: thang14112005/music-app:latest  # Update Docker Hub repository and tags
+          # - name: Build and Push Docker Image
+          #   uses: docker/build-push-action@v5
+          #   # with:
+          #   #   context: . main
+          #   #   file: . /main/Dockerfile # Update this path if needed
+          #   #    # Update this path if needed
+          #   #   push: true
+          #   #   tags: thang14112005/music-app:latest  # Update Docker Hub repository and tags
 
   setup-EC-2-with-docker-images-app:
         needs: ["deploy-infrastructure","Run-unit-test"]
@@ -121,7 +121,7 @@ jobs:
             uses: actions/setup-python@v3
             with:
               python-version: "3.9.16"
-          - name: Install nginx and pull images
+          - name: configure aws 
             run: |
               aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}
               aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}
