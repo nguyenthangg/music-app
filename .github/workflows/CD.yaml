@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - main
+      - stage
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -28,16 +29,34 @@ jobs:
         run: |
           cd terraform
           terraform init
-      # - name: Terraform Plan
-      #   run: |
-      #     cd terraform
-      #     terraform plan -out=tfplan
+      - name: Terraform Plan
+        run: |
+          cd terraform
+          terraform plan -out=tfplan
   
-      # - name: Terraform Apply
-      #   run: |
-      #     cd terraform
-      #     terraform apply -auto-approve tfplan
+      - name: Terraform Apply
+        run: |
+          cd terraform
+          terraform apply -auto-approve tfplan
 
-
-
-  
+  setup-EC-2-with-docker-images-app:
+    runs-on: ubuntu-latest
+    steps:
+              - uses: actions/checkout@v3
+              - name: Set up Python 3.9.16
+                uses: actions/setup-python@v3
+                with:
+                  python-version: "3.9.16"
+              - name: Install nginx and pull images
+                run: |
+                  ssh -i "ssh_key_aws" ubuntu@${{ secrets.EC2_PUBLIC_IP }}
+                    #run commands
+                    sudo apt-get update
+                    sudo apt-get install -y nginx
+                    sudo systemctl start nginx
+                    sudo systemctl enable nginx
+                    echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+                    docker pull thang14112005/music-app:latest
+                    docker run -d -p 8051:80 thang14112005/music-app:latest
+    
+    
