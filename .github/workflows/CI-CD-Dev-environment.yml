@@ -11,13 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      #   with:
-      #     fetch-depth: 0
-      # - name: SonarCloud Scan
-      #   uses: nguyenthangg/music-app@main
-      #   env:
-      #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
-      #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN}}
+        with:
+          fetch-depth: 0
+      - name: SonarCloud Scan
+        uses: nguyenthangg/music-app@main
+        env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN}}
 
   Run-unit-test:
       runs-on: ubuntu-latest
@@ -130,7 +130,10 @@ jobs:
           - name: SSH into EC2 instance and execute commands
             run: |
                 ssh -i "ssh_key_aws" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${{ secrets.EC2_PUBLIC_IP }} 'bash -s' << 'EOF'
-                  sudo apt-get update
+                 
+          - name: SSH into EC2 instance and execute commands
+            run: |    
+                sudo apt-get update
                   sudo apt-get install -y nginx
                   sudo systemctl start nginx
                   sudo systemctl enable nginx
