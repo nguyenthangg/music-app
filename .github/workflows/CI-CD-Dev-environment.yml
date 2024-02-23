@@ -109,7 +109,7 @@ jobs:
           #   #   tags: thang14112005/music-app:latest  # Update Docker Hub repository and tags
 
   setup-EC-2-with-docker-images-app:
-        needs: ["deploy-infrastructure","Run-unit-test"]
+        needs: ["deploy-infrastructure","Run-unit-test","push-image-to-docker-hub"]
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v3
