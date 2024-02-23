@@ -117,9 +117,9 @@ jobs:
             uses: actions/setup-python@v3
             with:
               python-version: "3.9.16"
-          - name: Install dependencies
+          - name: Install nginx and pull images
             run: |
-              ssh -i "ssh_key_aws" ubuntu@${{ secrets.EC2_PUBLIC_IP }}.us-west-2.compute.amazonaws.com
+              ssh -i "ssh_key_aws" ubuntu@${{ secrets.EC2_PUBLIC_IP }}
                 #run commands
                 sudo apt-get update
                 sudo apt-get install -y nginx
