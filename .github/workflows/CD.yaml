@@ -3,7 +3,7 @@ name: Dev-CD-CD
 on:
   push:
     branches:
-      - dev
+      - main
 jobs:
   build:
     runs-on: ubuntu-latest
