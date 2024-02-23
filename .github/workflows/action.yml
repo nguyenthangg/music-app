@@ -109,23 +109,32 @@ jobs:
             #   tags: thang14112005/music-app:latest  # Update Docker Hub repository and tags
 
   setup-EC-2-with-docker-images-app:
-        needs: deploy-infrastructure
+        needs: ["deploy-infrastructure","Run-unit-test"]
         runs-on: ubuntu-latest
         steps:
           - uses: actions/checkout@v3
+          - name: Install AWS CLI
+            run: |
+              sudo apt-get update
+              sudo apt-get install -y awscli
           - name: Set up Python 3.9.16
             uses: actions/setup-python@v3
             with:
               python-version: "3.9.16"
           - name: Install nginx and pull images
             run: |
-              ssh -i "ssh_key_aws" ubuntu@${{ secrets.EC2_PUBLIC_IP }}
-                #run commands
+              aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}
+              aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}
+              aws configure set region us-west-2  # Change to your desired region
+    
+              aws ec2 wait instance-status-ok --instance-ids <your-instance-id>
+    
+              ssh -i "ssh_key_aws" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${{ secrets.EC2_PUBLIC_IP }} << 'EOF'
                 sudo apt-get update
                 sudo apt-get install -y nginx
                 sudo systemctl start nginx
                 sudo systemctl enable nginx
                 echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-                docker pull thang14112005/music-app:latest
-                docker run -d -p 8051:80 thang14112005/music-app:latest
-
+                sudo docker pull thang14112005/music-app:latest
+                sudo docker run -d -p 8051:80 thang14112005/music-app:latest
+              EOF
