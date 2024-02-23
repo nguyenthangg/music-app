@@ -40,7 +40,7 @@ jobs:
           terraform_version: latest
 
       - name: Configure AWS credentials
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/dev'
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}
@@ -109,6 +109,7 @@ jobs:
             #   tags: thang14112005/music-app:latest  # Update Docker Hub repository and tags
 
   setup-EC-2-with-docker-images-app:
+        needs: deploy-infrastructure
         runs-on: ubutu-latest
         steps:
           - uses: actions/checkout@v3
