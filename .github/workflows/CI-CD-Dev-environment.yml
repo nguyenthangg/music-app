@@ -46,22 +46,7 @@ jobs:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}
           aws-region: us-west-2  # Change to your desired region
-      
-      # - name: Configure AWS credentials for dev branch
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_DEV }}
-      #     aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_DEV }}
-      #     aws-region: us-west-2  # Change to your desired region
-      
-      # - name: Configure AWS credentials for staging branch
-      #   if: github.ref == 'refs/heads/staging'  # Add this condition for staging branch
-      #   uses: aws-actions/configure-aws-credentials@v1
-      #   with:
-      #     aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}
-          # aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}
-      #     aws-region: us-west-2  # Change to your desired region
-      
+    
       # - name: Zip Lambda files
       #   run: |
       #       mkdir -p terraform/lambda/lambda
