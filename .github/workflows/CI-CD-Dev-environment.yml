@@ -11,13 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
-      - name: SonarCloud Scan
-        uses: nguyenthangg/music-app@main
-        env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN}}
+      #   with:
+      #     fetch-depth: 0
+      # - name: SonarCloud Scan
+      #   uses: nguyenthangg/music-app@main
+      #   env:
+      #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
+      #       SONAR_TOKEN: ${{ secrets.SONAR_TOKEN}}
 
   Run-unit-test:
       runs-on: ubuntu-latest
@@ -102,7 +102,7 @@ jobs:
 
       - name: Build Docker image
         run: docker build -t streamlit-app main
-        
+
   push-image-to-docker-hub:
     needs: ["source-scan","Run-unit-test","build-image"]
     runs-on: ubuntu-latest
