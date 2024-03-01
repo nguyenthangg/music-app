@@ -27,3 +27,6 @@ module "s3"{
 
 }
 
+module "ecr"{
+  source = "./ecr"
+}

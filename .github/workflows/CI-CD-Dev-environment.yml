@@ -38,6 +38,7 @@ jobs:
         uses: hashicorp/setup-terraform@v1
         with:
           terraform_version: latest
+          terraform_wrapper: false
 
       - name: Configure AWS credentials
         if: github.ref == 'refs/heads/dev'
@@ -110,28 +111,43 @@ jobs:
           push: true
           tags: thang14112005/music-app:latest  # Update Docker Hub repository and tags
 
-  setup-EC-2-with-docker-images-app:
-        needs: ["deploy-infrastructure","Run-unit-test","push-image-to-docker-hub"]
-        runs-on: ubuntu-latest
-        steps:
-          - uses: actions/checkout@v3
-          - name: Install AWS CLI
-            run: |
-              sudo apt-get update
-              sudo apt-get install -y awscli
-          - name: Set up Python 3.9.16
-            uses: actions/setup-python@v3
-            with:
-              python-version: "3.9.16"
-          - name: configure aws 
-            run: |
-              aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}
-              aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}
-              aws configure set region us-west-2  # Change to your desired region
+  push-image-to-ecr:
+    name: 'Terraform'
+    needs: ["source-scan","Run-unit-test","build-image","deploy-infrastructure"]
+    runs-on: ubuntu-latest
 
-          - name: SSH into EC2 instance and execute commands
-            run: |
-                ssh -i "ssh_key_aws" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${{ secrets.EC2_PUBLIC_IP }} 'bash -s' << 'EOF'
+    # Use the Bash shell regardless whether the GitHub Actions runner is ubuntu-latest, macos-latest, or windows-latest
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Call terraform output
+        run: |
+          output=$(terraform output test)
+          echo $output
+
+  # setup-EC-2-with-docker-images-app:
+  #       needs: ["deploy-infrastructure","Run-unit-test","push-image-to-docker-hub"]
+  #       runs-on: ubuntu-latest
+  #       steps:
+  #         - uses: actions/checkout@v3
+  #         - name: Install AWS CLI
+  #           run: |
+  #             sudo apt-get update
+  #             sudo apt-get install -y awscli
+  #         - name: Set up Python 3.9.16
+  #           uses: actions/setup-python@v3
+  #           with:
+  #             python-version: "3.9.16"
+  #         - name: configure aws 
+  #           run: |
+  #             aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}
+  #             aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}
+  #             aws configure set region us-west-2  # Change to your desired region
+
+  #         - name: SSH into EC2 instance and execute commands
+  #           run: |
+  #               ssh -i "ssh_key_aws" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${{ secrets.EC2_PUBLIC_IP }} 'bash -s' << 'EOF'
                  
           # - name: SSH into EC2 instance and execute commands
           #   run: |    
