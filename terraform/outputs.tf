@@ -8,5 +8,5 @@ output "aws_region" {
 
 output "repository_url" {
   description = "The URL of the created ECR repository"
-  value       = module.aws_ecr_repository.music-app.repository_url
+  value       = module.ecr.repository_url
 }
