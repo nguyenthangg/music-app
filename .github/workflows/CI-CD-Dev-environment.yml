@@ -121,10 +121,10 @@ jobs:
       run:
         shell: bash
     steps:
-      - name: Call terraform output
+      - name: Call terraform repository_url
         run: |
-          output=$(terraform output test)
-          echo $output
+          repository_url=$(terraform output repository_url)
+          echo $repository_url
 
   # setup-EC-2-with-docker-images-app:
   #       needs: ["deploy-infrastructure","Run-unit-test","push-image-to-docker-hub"]
