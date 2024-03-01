@@ -68,7 +68,7 @@ jobs:
         run: |
           cd terraform
           terraform apply -auto-approve tfplan
-
+          echo repository_url=$(terraform output repository_url) >> $GITHUB_ENV
   build-image:
     runs-on: ubuntu-latest
     needs: ["source-scan","Run-unit-test"]
@@ -112,7 +112,7 @@ jobs:
           tags: thang14112005/music-app:latest  # Update Docker Hub repository and tags
 
   push-image-to-ecr:
-    name: 'Terraform'
+    name: 'push-image-to-ecr'
     needs: ["source-scan","Run-unit-test","build-image","deploy-infrastructure"]
     runs-on: ubuntu-latest
 
@@ -123,8 +123,7 @@ jobs:
     steps:
       - name: Call terraform repository_url
         run: |
-          repository_url=$(terraform output repository_url)
-          echo $repository_url
+          echo ${{ env.repository_url}}
 
   # setup-EC-2-with-docker-images-app:
   #       needs: ["deploy-infrastructure","Run-unit-test","push-image-to-docker-hub"]
