@@ -13,10 +13,10 @@ jobs:
         with:
           fetch-depth: 0
       - name: SonarCloud Scan
-        uses: nguyenthangg/music-app@dev
+        uses: sonarsource/sonarcloud-github-action@master
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN}}
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
   Run-unit-test:
       runs-on: ubuntu-latest
