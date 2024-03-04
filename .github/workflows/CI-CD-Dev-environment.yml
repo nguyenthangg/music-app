@@ -139,49 +139,14 @@ jobs:
         run: |
           echo "The Terraform output is $TERRAFORM_OUTPUT"
 
-  # setup-EC-2-with-docker-images-app:
-  #       needs: ["deploy-infrastructure","Run-unit-test","push-image-to-docker-hub"]
-  #       runs-on: ubuntu-latest
-  #       steps:
-  #         - uses: actions/checkout@v3
-  #         - name: Install AWS CLI
-  #           run: |
-  #             sudo apt-get update
-  #             sudo apt-get install -y awscli
-  #         - name: Set up Python 3.9.16
-  #           uses: actions/setup-python@v3
-  #           with:
-  #             python-version: "3.9.16"
-  #         - name: configure aws 
-  #           run: |
-  #             aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID_STAGING }}
-  #             aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY_STAGING }}
-  #             aws configure set region us-west-2  # Change to your desired region
-
-  #         - name: SSH into EC2 instance and execute commands
-  #           run: |
-  #               ssh -i "ssh_key_aws" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null ubuntu@${{ secrets.EC2_PUBLIC_IP }} 'bash -s' << 'EOF'
-                 
-          # - name: SSH into EC2 instance and execute commands
-          #   run: |    
-          #       sudo apt-get update
-          #         sudo apt-get install -y nginx
-          #         sudo systemctl start nginx
-          #         sudo systemctl enable nginx
-          #         echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
-          #         docker pull thang14112005/music-app:latest
-          #         docker run -d -p 8051:80 thang14112005/music-app:latest
-          #       EOF
-      
-          k6-test:
-            name: 'k6 test'
-            needs: ["source-scan","Run-unit-test","build-image","deploy-infrastructure","push-image-to-ecr"]
-            runs-on: ubuntu-latest
-            steps:
-              - name: Checkout
-                uses: actions/checkout@v4
-              - name: Run k6 local test
-                uses: grafana/k6-action@v0.3.1
-                with:
-                  filename: test.js
+  k6 test:
+      needs: ["source-scan","Run-unit-test","build-image","deploy-infrastructure","push-image-to-ecr"]
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+        - name: Run k6 local test
+          uses: grafana/k6-action@v0.3.1
+          with:
+            filename: test.js
         
