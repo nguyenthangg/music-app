@@ -1,5 +1,6 @@
 name: CI Dev
-
+env:
+  -
 on:
   push:
     branches:
@@ -172,4 +173,15 @@ jobs:
           #         docker run -d -p 8051:80 thang14112005/music-app:latest
           #       EOF
       
-
+          k6-test:
+            name: 'k6 test'
+            needs: ["source-scan","Run-unit-test","build-image","deploy-infrastructure","push-image-to-ecr"]
+            runs-on: ubuntu-latest
+            steps:
+              - name: Checkout
+                uses: actions/checkout@v4
+              - name: Run k6 local test
+                uses: grafana/k6-action@v0.3.1
+                with:
+                  filename: test.js
+        
