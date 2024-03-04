@@ -19,7 +19,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           args: >
-            -Dsonar.projectKey=music-app
+            -Dsonar.projectKey=nguyenthangg_music-app
             -Dsonar.organization=nguyenthangg
   
 
