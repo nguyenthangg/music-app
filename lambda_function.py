@@ -2,7 +2,7 @@ import json
 import boto3
 from module_post import module_post
 from module_delete_link import module_delete_link
-from authenticate import authenticate
+# from authenticate import authenticate
 region = 'us-west-2'
 dynamodb = boto3.resource('dynamodb', region_name=region)
 

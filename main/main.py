@@ -2,7 +2,7 @@ import streamlit as st
 import requests
 
 def fetch_data():
-    api_endpoint = "https://66wt2zswh0.execute-api.us-west-2.amazonaws.com/prod/yourlist"
+    api_endpoint = "https://0akpo3v3sf.execute-api.us-west-2.amazonaws.com/prod/yourlist"
     response = requests.get(api_endpoint)
     
     # Modify the video links to use the "https://www.youtube.com/embed/VIDEO_ID" format
