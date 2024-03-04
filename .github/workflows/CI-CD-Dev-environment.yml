@@ -137,7 +137,8 @@ jobs:
         run: |
           echo "The Terraform output is $TERRAFORM_OUTPUT"
 
-  k6 test:
+  k6-test:
+      name: 'k6 test'
       needs: ["source-scan","Run-unit-test","build-image","deploy-infrastructure","push-image-to-ecr"]
       runs-on: ubuntu-latest
       steps:
