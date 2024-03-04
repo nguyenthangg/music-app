@@ -1,6 +1,4 @@
 name: CI Dev
-env:
-  -
 on:
   push:
     branches:
