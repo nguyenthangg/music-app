@@ -4,6 +4,10 @@ on:
     branches:
       - dev
 
+env:
+  ECR_REPOSITORY: ${{ secrets.REPO_NAME }}
+  EKS_CLUSTER_NAME: eks-demo
+  AWS_REGION: us-west-2
 jobs:
   source-scan:
     name: SonarCloud Scan
@@ -160,6 +164,15 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           echo "Pushing image to ECR..."
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
+      - name: Update kube config
+        run: aws eks update-kubeconfig --name $EKS_CLUSTER_NAME --region $AWS_REGION
+    
+      - name: Deploy to EKS
+        run: |
+          sed -i.bak "s|DOCKER_IMAGE|$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG|g" terraform-eks-infrastructure/raw-mainfests/hello-app-deployment.yaml && \
+          kubectl apply -f terraform-eks-infrastructure/raw-mainfests/hello-app-deployment.yaml
+          kubectl apply -f terraform-eks-infrastructure/raw-mainfests/hello-app-service.yaml
 
   k6-test:
       name: 'k6 test'

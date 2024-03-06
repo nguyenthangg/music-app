@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: music-app-deployment-prod
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: music-app-prod
+  template:
+    metadata:
+      labels:
+        app: music-app-prod
+    spec:
+      containers:
+      - name: music-app-prod
+        image: 078330994599.dkr.ecr.us-west-2.amazonaws.com/music-app:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8501

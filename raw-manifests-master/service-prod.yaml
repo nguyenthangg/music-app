@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: music-app-service-prod
+spec:
+  selector:
+    app: music-app-prod
+  type: LoadBalancer
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8501  # Make sure this matches the port your Streamlit app is running on

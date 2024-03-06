@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: music-app-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: music-app
+  template:
+    metadata:
+      labels:
+        app: music-app
+    spec:
+      containers:
+      - name: music-app
+        image: 078330994599.dkr.ecr.us-west-2.amazonaws.com/music-app:latest
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        ports:
+        - containerPort: 8501
+
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#   name: nginx-deployment
+# spec:
+#   replicas: 3  # Adjust the number of replicas as needed
+#   selector:
+#     matchLabels:
+#       app: nginx
+#   template:
+#     metadata:
+#       labels:
+#         app: nginx
+#     spec:
+#       containers:
+#       - name: nginx
+#         image: nginx:latest  # You can use a specific version if needed
+#         ports:
+#         - containerPort: 80
